@@ -18,6 +18,7 @@ class MainView : View("Hello TornadoFX") {
     var updateAppearence: TextField by singleAssign()
     var deleteById: TextField by singleAssign()
     var displayArea: TextArea by singleAssign()
+
     override val root = hbox {
         form {
             fieldset {// This Field Set is for the adding of animal objects
@@ -36,6 +37,10 @@ class MainView : View("Hello TornadoFX") {
                 {
                     locationField = textfield()
                 }
+                field("Image Link: ")
+                {
+                    imageField = textfield()
+                }
                 buttonbar {
                     button("Add"){
                         action {
@@ -46,7 +51,7 @@ class MainView : View("Hello TornadoFX") {
                     }
                     button("List") {
                         action {
-                            displayArea.text = cont.listAnimals()
+                            displayArea.text(cont.listAnimals())
                         }
                     }
                 }
@@ -54,10 +59,20 @@ class MainView : View("Hello TornadoFX") {
             }
             fieldset {
                 label("Delete Animal")
+                field("Delete By ID")
+                button("Delete") {
+                    action{
+                        //add delete stuff
+                    }
+                }
             }
+
         }
         hbox{
-            displayArea = textarea {  }
+            displayArea = textarea()
+            displayArea.prefHeight(20.00)
+            displayArea.prefWidth(20.00)
+
         }
     }
 }
