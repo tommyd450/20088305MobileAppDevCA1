@@ -1,9 +1,9 @@
 package com.__20088305assign1mobileapp__.main
 
 import com.__20088305assign1mobileapp__.animal.Animal
-class controller {
+class Controller {
     val animalList = ArrayList<Animal>()
-    fun addPlacemark(species: String, appearence: String, location: String,img: String) : Boolean{
+    fun addAnimal(species: String, appearence: String, location: String,img: String) : Boolean{
         var newAnimal = Animal(animalList.size.toLong(),species,appearence,location,img)
         println("Add Animal")
         println()
@@ -17,10 +17,9 @@ class controller {
             return false
     }
 
-    fun updatePlacemark(searchID: Int) : String {
+    fun updateAnimal(searchID: Int) : String {
         println("Update Placemark")
         println()
-        listPlacemarks()
         var searchId = getId()
         val animal = search(searchId)
 
@@ -38,11 +37,10 @@ class controller {
         return ""
     }
 
-    fun listPlacemarks():String {
-        println("You Chose List All Placemarks")
-        println()
+    fun listAnimals():String {
         var list : String = ""
         animalList.forEach{ list+=it.toString()+"\n"}
+        print(list)
         return list
     }
 
@@ -63,7 +61,7 @@ class controller {
         return foundAnimal
     }
 
-    fun searchPlacemark() {
+    fun searchAnimals() {
         var searchId= getId()
         print(search(searchId))
     }

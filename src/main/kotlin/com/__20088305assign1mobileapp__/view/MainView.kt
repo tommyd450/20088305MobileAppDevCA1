@@ -2,12 +2,16 @@ package com.__20088305assign1mobileapp__.view
 
 import javafx.scene.control.TextField
 import com.__20088305assign1mobileapp__.app.Styles
-import com.__20088305assign1mobileapp__.main.controller
+import com.__20088305assign1mobileapp__.main.Controller
+import javafx.scene.control.TextArea
+
 import tornadofx.*
 
 class MainView : View("Hello TornadoFX") {
-    var firstNameField: TextField by singleAssign()
-    var lastNameField: TextField by singleAssign()
+    var cont = Controller() //Instantiates Controller
+    var speciesField: TextField by singleAssign() //Dont know what singleAssign does look up
+    var appearenceField: TextField by singleAssign()
+    var displayArea: TextArea by singleAssign()
     override val root = hbox {
         form {
             fieldset {
@@ -16,28 +20,33 @@ class MainView : View("Hello TornadoFX") {
                 }
                 field("Animal")
                 {
-                    firstNameField = textfield()
+                    speciesField = textfield()
                 }
 
-                buttonbar {
-                    button("Add")
-                }
-                field("Animal")
+                field("Appearence")
                 {
-                    textfield {  "Yep"}
+                    appearenceField = textfield()
                 }
 
                 buttonbar {
                     button("Add"){
                         action {
-                            print(firstNameField.text)
+                            print(speciesField.text)
+                            print(appearenceField.text)
+                            cont.addAnimal(speciesField.text,appearenceField.text,"","")
+                        }
+                    }
+                    button("List") {
+                        action {
+                            displayArea.text = cont.listAnimals()
+
                         }
                     }
                 }
             }
         }
         hbox{
-            textarea {  }
+            displayArea = textarea {  }
         }
     }
 }
