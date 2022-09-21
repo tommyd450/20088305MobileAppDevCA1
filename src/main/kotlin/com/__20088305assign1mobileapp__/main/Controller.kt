@@ -1,48 +1,49 @@
 package com.__20088305assign1mobileapp__.main
-import mu.KotlinLogging
-class controller {
-    fun addPlacemark(){
-        var aPlacemark = PlacemarkModel()
-        println("Add Placemark")
-        println()
-        print("Enter a Title : ")
-        aPlacemark.title = readLine()!!
-        print("Enter a Description : ")
-        aPlacemark.description = readLine()!!
 
-        if (aPlacemark.title.isNotEmpty() && aPlacemark.description.isNotEmpty()) {
-            aPlacemark.id = placemarks.size.toLong()
-            placemarks.add(aPlacemark.copy())
-            logger.info("Placemark Added : [ $aPlacemark ]")
+import com.__20088305assign1mobileapp__.animal.Animal
+class controller {
+    val animalList = ArrayList<Animal>()
+    fun addPlacemark(species: String, appearence: String, location: String,img: String) : Boolean{
+        var newAnimal = Animal(animalList.size.toLong(),species,appearence,location,img)
+        println("Add Animal")
+        println()
+
+        if (species.isNotEmpty() && appearence.isNotEmpty()) {
+
+            animalList.add(newAnimal.copy())
+            return true
         }
         else
-            logger.info("Placemark Not Added")
+            return false
     }
 
-    fun updatePlacemark() {
+    fun updatePlacemark(searchID: Int) : String {
         println("Update Placemark")
         println()
         listPlacemarks()
         var searchId = getId()
-        val aPlacemark = search(searchId)
+        val animal = search(searchId)
 
-        if(aPlacemark != null) {
+        if(animal != null) {
             // Ask the user for new details here
-            print("Old title ="+aPlacemark.title)
+            print("Old title ="+animal.species)
             print("Enter a new Title : ")
-            aPlacemark.title = readLine()!!
-            print("Old title ="+aPlacemark.description)
+            //aPlacemark.title = readLine()!!
+            print("Old title ="+animal.appearance)
             print("Enter a New Description : ")
-            aPlacemark.description = readLine()!!
+            //aPlacemark.description = readLine()!!
         }
         else
             println("Placemark Not Updated...")
+        return ""
     }
 
-    fun listPlacemarks() {
+    fun listPlacemarks():String {
         println("You Chose List All Placemarks")
         println()
-        placemarks.forEach{ logger.info("${it}")}
+        var list : String = ""
+        animalList.forEach{ list+=it.toString()+"\n"}
+        return list
     }
 
     fun getId() : Long {
@@ -57,9 +58,9 @@ class controller {
         return searchId
     }
 
-    fun search(id: Long) : PlacemarkModel? {
-        var foundPlacemark: PlacemarkModel? = placemarks.find{ p -> p.id == id }
-        return foundPlacemark
+    fun search(id: Long) : Animal? {
+        var foundAnimal: Animal? = animalList.find{ p -> p.id == id }
+        return foundAnimal
     }
 
     fun searchPlacemark() {
@@ -68,9 +69,9 @@ class controller {
     }
 
     fun dummyData() {
-        placemarks.add(PlacemarkModel(1, "New York New York", "So Good They Named It Twice"))
-        placemarks.add(PlacemarkModel(2, "Ring of Kerry", "Some place in the Kingdom"))
-        placemarks.add(PlacemarkModel(3, "Waterford City", "You get great Blaas Here!!"))
+        animalList.add(Animal(1, "Dog", "Dog Like Yolk"))
+        animalList.add(Animal(2, "Cat", "Cat Adjacent"))
+        animalList.add(Animal(3, "RabbitDog", "An unholy abomination"))
     }
 
 }
