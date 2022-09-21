@@ -1,10 +1,13 @@
 package com.__20088305assign1mobileapp__.view
 
-
+import javafx.scene.control.TextField
 import com.__20088305assign1mobileapp__.app.Styles
+import com.__20088305assign1mobileapp__.main.controller
 import tornadofx.*
 
 class MainView : View("Hello TornadoFX") {
+    var firstNameField: TextField by singleAssign()
+    var lastNameField: TextField by singleAssign()
     override val root = hbox {
         form {
             fieldset {
@@ -13,19 +16,23 @@ class MainView : View("Hello TornadoFX") {
                 }
                 field("Animal")
                 {
-                    textfield {  }
+                    firstNameField = textfield()
                 }
 
                 buttonbar {
                     button("Add")
                 }
-                field("Animal2")
+                field("Animal")
                 {
-                    textfield {  }
+                    textfield {  "Yep"}
                 }
 
                 buttonbar {
-                    button("Add")
+                    button("Add"){
+                        action {
+                            print(firstNameField.text)
+                        }
+                    }
                 }
             }
         }
