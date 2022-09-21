@@ -27,10 +27,8 @@ class Controller {
             // Ask the user for new details here
             print("Old title ="+animal.species)
             print("Enter a new Title : ")
-            //aPlacemark.title = readLine()!!
             print("Old title ="+animal.appearance)
             print("Enter a New Description : ")
-            //aPlacemark.description = readLine()!!
         }
         else
             println("Placemark Not Updated...")
