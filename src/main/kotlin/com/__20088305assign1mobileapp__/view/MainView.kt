@@ -69,7 +69,6 @@ class MainView : View("Hello TornadoFX") {
                     action{
                         try{
                             //cont.dummyData()
-                            cont.search(deleteById.text.toLong())
                             cont.deleteAnimal(cont.search(deleteById.text.toLong()))
                             displayArea.text(cont.listAnimals())
                         }catch (e: NumberFormatException){
