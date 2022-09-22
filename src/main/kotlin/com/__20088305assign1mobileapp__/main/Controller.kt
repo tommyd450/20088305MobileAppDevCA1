@@ -1,59 +1,39 @@
 package com.__20088305assign1mobileapp__.main
 
 import com.__20088305assign1mobileapp__.animal.Animal
+import com.__20088305assign1mobileapp__.animal.AnimalList
+import com.__20088305assign1mobileapp__.animal.AnimalStore
+
+val animalList = AnimalList()
 class Controller {
-    val animalList = ArrayList<Animal>()
+
+
     fun addAnimal(species: String, appearence: String, location: String,img: String) : Boolean{
-        var newAnimal = Animal(animalList.size.toLong(),species,appearence,location,img)
-        println("Add Animal")
-        println()
-        if (species.isNotEmpty() && appearence.isNotEmpty()) {
-            animalList.add(newAnimal.copy())
+        var newAnimal = Animal(animalList.animals.size.toLong(),species,appearence,location,img)
+        if(animalList.create(newAnimal)){
             return true
         }
-        else
-            return false
+        return false
     }
 
     fun updateAnimal(searchID: Long,species: String,appearence: String,location: String,img: String) : Boolean {
-        val animal = search(searchID)
-
-        if(animal != null) {
-            for(i in animalList)
-            {
-                if(i == animal)
-                {
-                    i.species=species
-                    i.appearance=appearence
-                    i.location=location
-                    i.img=img
-                    return true
-                }
-            }
+        val animal = Animal(searchID,species,appearence,location,img)
+        if(animalList.update(animal)) {
+            return true
         }
-            return false
+        return false
     }
 
     fun listAnimals():String {
         var list : String = "\n"
-        animalList.forEach{ list+=it.toString()+"\n"}
+        animalList.findAll().forEach{ list+=it.toString()+"\n"}
         print(list)
         return list
     }
 
-    /*fun getId() : Long {
-        var strId : String?
-        var searchId : Long
-        strId = readLine()!!
-        searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
-            strId.toLong()
-        else
-            -9
-        return searchId
-    }*/
 
     fun search(id: Long) : Animal? {
-        var foundAnimal: Animal? = animalList.find{ p -> p.id == id }
+        var foundAnimal: Animal? = animalList.findAll().find{ p -> p.id == id }
         return foundAnimal
     }
 
@@ -63,20 +43,17 @@ class Controller {
         print(search(searchId))
     }*/
 
-    fun deleteAnimal(animal: Animal?){
-        for(i in animalList)
-        {
-            if(i == animal)
-            {
-                animalList.remove(i)
-            }
+    fun deleteAnimal(animal: Animal?) : Boolean {
+        if (animalList.delete(animal) && !animalList.findAll().contains(animal)){
+            return true
         }
+        return false
     }
 
     fun dummyData() {
-        animalList.add(Animal(1, "Dog", "Dog Like Yolk"))
-        animalList.add(Animal(2, "Cat", "Cat Adjacent"))
-        animalList.add(Animal(3, "RabbitDog", "An unholy abomination"))
+        //animalList.add(Animal(1, "Dog", "Dog Like Yolk"))
+        //animalList.add(Animal(2, "Cat", "Cat Adjacent"))
+        //animalList.add(Animal(3, "RabbitDog", "An unholy abomination"))
     }
 
 }

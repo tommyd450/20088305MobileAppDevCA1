@@ -6,6 +6,7 @@ import tornadofx.Stylesheet
 import tornadofx.box
 import tornadofx.cssclass
 import tornadofx.px
+import java.awt.Color
 
 class Styles : Stylesheet() {
     companion object {
