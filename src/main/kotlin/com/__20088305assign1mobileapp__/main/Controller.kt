@@ -17,26 +17,29 @@ class Controller {
             return false
     }
 
-    fun updateAnimal(searchID: Int) : String {
+    fun updateAnimal(searchID: Long,species: String,appearence: String,location: String,img: String) : Boolean {
         println("Update Placemark")
         println()
-        var searchId = getId()
-        val animal = search(searchId)
+        val animal = search(searchID)
 
         if(animal != null) {
-            // Ask the user for new details here
-            print("Old title ="+animal.species)
-            print("Enter a new Title : ")
-            print("Old title ="+animal.appearance)
-            print("Enter a New Description : ")
+            for(i in animalList)
+            {
+                if(i == animal)
+                {
+                    i.species=species
+                    i.appearance=appearence
+                    i.location=location
+                    i.img=img
+                    return true
+                }
+            }
         }
-        else
-            println("Placemark Not Updated...")
-        return ""
+            return false
     }
 
     fun listAnimals():String {
-        var list : String = ""
+        var list : String = "\n"
         animalList.forEach{ list+=it.toString()+"\n"}
         print(list)
         return list
@@ -62,6 +65,16 @@ class Controller {
     fun searchAnimals() {
         var searchId= getId()
         print(search(searchId))
+    }
+
+    fun deleteAnimal(animal: Animal?){
+        for(i in animalList)
+        {
+            if(i == animal)
+            {
+                animalList.remove(i)
+            }
+        }
     }
 
     fun dummyData() {

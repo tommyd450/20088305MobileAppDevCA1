@@ -16,6 +16,8 @@ class MainView : View("Hello TornadoFX") {
     var updateById: TextField by singleAssign()
     var updateSpecies: TextField by singleAssign()
     var updateAppearence: TextField by singleAssign()
+    var updateLocation: TextField by singleAssign()
+    var updateImg: TextField by singleAssign()
     var deleteById: TextField by singleAssign()
     var displayArea: TextArea by singleAssign()
 
@@ -51,6 +53,7 @@ class MainView : View("Hello TornadoFX") {
                     }
                     button("List") {
                         action {
+                            displayArea.text("")
                             displayArea.text(cont.listAnimals())
                         }
                     }
@@ -59,10 +62,53 @@ class MainView : View("Hello TornadoFX") {
             }
             fieldset {
                 label("Delete Animal")
-                field("Delete By ID")
+                field("Delete By ID") {
+                    deleteById = textfield()
+                }
                 button("Delete") {
                     action{
-                        //add delete stuff
+                        try{
+                            //cont.dummyData()
+                            cont.search(deleteById.text.toLong())
+                            cont.deleteAnimal(cont.search(deleteById.text.toLong()))
+                            displayArea.text(cont.listAnimals())
+                        }catch (e: NumberFormatException){
+                            displayArea.text("\n Borked")
+                        }
+
+                    }
+                }
+            }
+            fieldset {// Updating Animal Field
+                label("Update Animal")
+                field("Animal to Update Id") {
+                    updateById = textfield()
+                }
+                field("New Species") {
+                    updateSpecies = textfield()
+                }
+                field("New Appearence") {
+                    updateAppearence = textfield()
+                }
+                field("New Location") {
+                    updateLocation = textfield()
+                }
+                field("New Img") {
+                    updateImg = textfield()
+                }
+                button("Update") {
+                    action{
+                        try{
+                            cont.search(updateById.text.toLong())
+                            if(cont.updateAnimal(updateById.text.toLong(),updateSpecies.text,updateAppearence.text,updateLocation.text,updateImg.text))
+                            {
+                                print("Great Success")
+                            }
+
+                        }catch (e: NumberFormatException){
+
+                        }
+
                     }
                 }
             }
