@@ -48,7 +48,7 @@ class MainView : View("Hello TornadoFX") {
                         action {
                             print(speciesField.text)
                             print(appearenceField.text)
-                            cont.addAnimal(speciesField.text,appearenceField.text,"","")
+                            cont.addAnimal(speciesField.text,appearenceField.text,locationField.text,imageField.text)
                         }
                     }
                     button("List") {

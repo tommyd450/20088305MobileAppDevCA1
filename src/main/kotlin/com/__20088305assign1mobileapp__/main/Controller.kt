@@ -3,12 +3,15 @@ package com.__20088305assign1mobileapp__.main
 import com.__20088305assign1mobileapp__.animal.Animal
 import com.__20088305assign1mobileapp__.animal.AnimalList
 import com.__20088305assign1mobileapp__.animal.AnimalStore
+import com.__20088305assign1mobileapp__.animal.animalDatabase
 
-val animalList = AnimalList()
+
+val animalList = animalDatabase()
 class Controller {
 
 
     fun addAnimal(species: String, appearence: String, location: String,img: String) : Boolean{
+        print(animalList.animals.size.toLong())
         var newAnimal = Animal(animalList.animals.size.toLong(),species,appearence,location,img)
         if(animalList.create(newAnimal)){
             return true
@@ -26,8 +29,8 @@ class Controller {
 
     fun listAnimals():String {
         var list : String = "\n"
+        animalList.dbToList()
         animalList.findAll().forEach{ list+=it.toString()+"\n"}
-        print(list)
         return list
     }
 
