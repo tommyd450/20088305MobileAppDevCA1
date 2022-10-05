@@ -2,12 +2,8 @@ package com.__20088305assign1mobileapp__.animal
 
 import com.__20088305assign1mobileapp__.main.animalList
 import java.sql.*
-
-
-
 class animalDatabase: AnimalStore {
     val animals = ArrayList<Animal>()
-
 
     fun dbToList(): String {
         animals.clear()
@@ -27,9 +23,8 @@ class animalDatabase: AnimalStore {
             }
         }catch (e:SQLException)
         {
-
+            println(e)
         }
-
         return ""
     }
 
@@ -47,7 +42,6 @@ class animalDatabase: AnimalStore {
         try {
             val con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mobileappdb", "root", "")
             var query: String = "INSERT INTO `animals`(species,appearence,location,img) VALUES("+" '"+animal.species+"' , '"+animal.appearance+"' , '"+animal.location+"', '"+animal.img+"')";
-
             var stm : PreparedStatement = con.prepareStatement(query)
             stm.execute()
             if (animals.contains(animal))
@@ -55,34 +49,43 @@ class animalDatabase: AnimalStore {
                 return true
             }
         }catch (e:SQLException){
-            print(e)
+            println(e)
+            println("SQL Problem")
         }
-
         return false
     }
 
     override fun update(animal: Animal) : Boolean{
-        var foundAnimal = findOne(animal.id)
-        if (foundAnimal != null) {
-            foundAnimal.species=animal.species
-            foundAnimal.appearance=animal.appearance
-            foundAnimal.location=animal.location
-            foundAnimal.img=animal.img
-            return true
+        try {
+            var foundAnimal = findOne(animal.id)
+            if (foundAnimal != null) {
+                foundAnimal.species=animal.species
+                foundAnimal.appearance=animal.appearance
+                foundAnimal.location=animal.location
+                foundAnimal.img=animal.img
+                val con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mobileappdb", "root", "")
+                var query: String = "UPDATE `animals` SET `id`='"+animal.id+"',`species`='"+animal.species+"',`appearence`='"+animal.appearance+"',`location`='"+animal.location+"',`img`='"+animal.img+"' WHERE `id` = '"+animal.id+"'"
+                var stm : PreparedStatement = con.prepareStatement(query)
+                stm.execute();
+                return true
+            }else
+            {
+                println("Failed to add animal to the database/List.")
+                return false
+            }
+        }catch (e: SQLException)
+        {
+            println(e)
+            println("SQL Error")
         }
         return false
     }
 
     override fun delete(animal: Animal?): Boolean{
-        for(i in animals)
-        {
-            if(i == animal)
-            {
-                animals.remove(i)
+            if(animal!=null && findOne(animal.id)==animal) {
+                animals.removeAt(animals.indexOf(animal))
                 return true
             }
-        }
         return false
     }
-
 }
