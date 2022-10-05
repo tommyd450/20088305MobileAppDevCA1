@@ -70,7 +70,7 @@ class animalDatabase: AnimalStore {
                 return true
             }else
             {
-                println("Failed to add animal to the database/List.")
+                println("Failed to Update the Animal/It does not exist in the database.")
                 return false
             }
         }catch (e: SQLException)
@@ -82,10 +82,26 @@ class animalDatabase: AnimalStore {
     }
 
     override fun delete(animal: Animal?): Boolean{
-            if(animal!=null && findOne(animal.id)==animal) {
-                animals.removeAt(animals.indexOf(animal))
-                return true
+        if (animal!= null  && animals.contains(animal))
+        {
+            try
+            {
+                val con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mobileappdb", "root", "")
+                var query: String = "DELETE FROM `animals` WHERE `id`='"+animal.id+"'"
+                var stm : PreparedStatement = con.prepareStatement(query)
+                stm.execute();
+                animals.remove(animal)
+                println("Animal Deleted Successfully")
             }
-        return false
+            catch(e: SQLException)
+            {
+                println(e)
+            }
+            return true
+        }else {
+            println("Animal Does not exist Try again")
+            return false
+        }
     }
+
 }
