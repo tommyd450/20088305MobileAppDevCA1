@@ -1,18 +1,14 @@
 package com.__20088305assign1mobileapp__.main
-
 import com.__20088305assign1mobileapp__.animal.Animal
-import com.__20088305assign1mobileapp__.animal.AnimalList
-import com.__20088305assign1mobileapp__.animal.AnimalStore
-import com.__20088305assign1mobileapp__.animal.animalDatabase
+import com.__20088305assign1mobileapp__.animal.AnimalDatabase
 
-
-val animalList = animalDatabase()
+val animalList = AnimalDatabase()
 class Controller {
 
 
     fun addAnimal(species: String, appearence: String, location: String,img: String) : Boolean{
         print(animalList.animals.size.toLong())
-        var newAnimal = Animal(animalList.animals.size.toLong(),species,appearence,location,img)
+        val newAnimal = Animal(animalList.animals.size.toLong(),species,appearence,location,img)
         if(animalList.create(newAnimal)){
             return true
         }
@@ -28,23 +24,15 @@ class Controller {
     }
 
     fun listAnimals():String {
-        var list : String = "\n"
+        var list = "\n"
         animalList.dbToList()
         animalList.findAll().forEach{ list+=it.toString()+"\n"}
         return list
     }
 
-
-    fun search(id: Long) : Animal? {
-        var foundAnimal: Animal? = animalList.findAll().find{ p -> p.id == id }
-        return foundAnimal
+    fun search(id: Long): Animal? {
+        return animalList.findAll().find { p -> p.id == id }
     }
-
-    /*
-    fun searchAnimals() {
-        var searchId= getId()
-        print(search(searchId))
-    }*/
 
     fun deleteAnimal(animal: Animal?) : Boolean {
         if (animalList.delete(animal) && !animalList.findAll().contains(animal)){
@@ -53,10 +41,5 @@ class Controller {
         return false
     }
 
-    fun dummyData() {
-        //animalList.add(Animal(1, "Dog", "Dog Like Yolk"))
-        //animalList.add(Animal(2, "Cat", "Cat Adjacent"))
-        //animalList.add(Animal(3, "RabbitDog", "An unholy abomination"))
-    }
 
 }
