@@ -25,7 +25,6 @@ class Controller {
 
     fun listAnimals():String {
         var list = "\n"
-        animalList.dbToList()
         animalList.findAll().forEach{ list+=it.toString()+"\n"}
         return list
     }
@@ -36,6 +35,23 @@ class Controller {
 
     fun deleteAnimal(animal: Animal?) : Boolean {
         if (animalList.delete(animal) && !animalList.findAll().contains(animal)){
+            return true
+        }
+        return false
+    }
+
+    fun saveAllAnimalsToDb() : Boolean
+    {
+        if(animalList.saveAllToDatabase())
+        {
+            return true
+        }
+        return false
+    }
+
+    fun loadAnimalsFromDb() : Boolean
+    {
+        if(animalList.dbToList()) {
             return true
         }
         return false

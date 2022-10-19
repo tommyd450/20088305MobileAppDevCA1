@@ -4,12 +4,12 @@ import java.sql.*
 class AnimalDatabase: AnimalStore {
     val animals = ArrayList<Animal>()
 
-    fun dbToList(): String {
+    fun dbToList(): Boolean {
         animals.clear()
         try {
             val con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mobileappdb", "root", "")
             val st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
-            val rs = st.executeQuery("select * from `Animals`")
+            val rs = st.executeQuery("select * from `animals`")
             while (rs.next()){
                 val id =  rs.getString("id")
                 val species = rs.getString("species")
@@ -19,11 +19,35 @@ class AnimalDatabase: AnimalStore {
                 val newAnimal = Animal(id.toLong(),species,appearence,location,img)
                 animals.add(newAnimal)
             }
+            return true
         }catch (e:SQLException)
         {
             println(e)
         }
-        return ""
+        return false
+    }
+
+    fun saveAllToDatabase():Boolean
+    {
+        // Wipes and Resaves all to the Database running on WAMP
+        try {
+            val con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mobileappdb", "root", "")
+            var query: String = "DELETE FROM `animals`"
+            var stm : PreparedStatement = con.prepareStatement(query)
+            stm.execute()
+            if (animals.isNotEmpty()){
+                animals.forEach {
+                    query = "INSERT INTO `animals`(species,appearence,location,img) VALUES("+" '"+it.species+"' , '"+it.appearance+"' , '"+it.location+"', '"+it.img+"')"
+                    stm = con.prepareStatement(query)
+                    stm.execute()
+                }
+                return true
+            }
+        }catch (e:SQLException)
+        {
+            print(e.stackTrace)
+        }
+        return false
     }
 
     override fun findAll(): List<Animal> {
@@ -40,6 +64,7 @@ class AnimalDatabase: AnimalStore {
             val query: String = "INSERT INTO `animals`(species,appearence,location,img) VALUES("+" '"+animal.species+"' , '"+animal.appearance+"' , '"+animal.location+"', '"+animal.img+"')"
             val stm : PreparedStatement = con.prepareStatement(query)
             stm.execute()
+            dbToList()
             if (animals.contains(animal))
             {
                 return true

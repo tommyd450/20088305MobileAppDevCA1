@@ -20,6 +20,7 @@ class MainView : View("Hello TornadoFX") {
     var updateImg: TextField by singleAssign()
     var deleteById: TextField by singleAssign()
     var displayArea: TextArea by singleAssign()
+    var displayArea2 : TextArea by singleAssign()
 
     override val root = hbox {
         form {
@@ -53,8 +54,28 @@ class MainView : View("Hello TornadoFX") {
                     }
                     button("List") {
                         action {
-                            displayArea.text("")
-                            displayArea.text(cont.listAnimals())
+                            displayArea.text+= cont.listAnimals()+"\n"
+                        }
+                    }
+                    button("Save"){
+                        action{
+                            if(cont.saveAllAnimalsToDb())
+                            {
+                                displayArea.text += "Successfully Saved\n"
+                            }else
+                            {
+                                displayArea.text += "Failed To Save\n"
+                            }
+                        }
+                    }
+                    button("Load"){
+                        action{
+                            if(cont.loadAnimalsFromDb())
+                            {
+                                displayArea.text += "Successfully Loaded\n"
+                            }else{
+                                displayArea.text += "Failed To Load\n"
+                            }
                         }
                     }
                 }
@@ -70,7 +91,7 @@ class MainView : View("Hello TornadoFX") {
                         try{
                             //cont.dummyData()
                             cont.deleteAnimal(cont.search(deleteById.text.toLong()))
-                            displayArea.text(cont.listAnimals())
+                            displayArea.text += cont.listAnimals()+"\n"
                         }catch (e: NumberFormatException){
                             displayArea.text("\n Borked")
                         }
@@ -113,10 +134,11 @@ class MainView : View("Hello TornadoFX") {
             }
 
         }
-        hbox{
+        hbox {
             displayArea = textarea()
             displayArea.prefHeight(20.00)
             displayArea.prefWidth(20.00)
+            displayArea.maxHeight = 700.0;
 
         }
     }
