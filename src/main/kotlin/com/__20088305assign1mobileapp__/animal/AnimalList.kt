@@ -1,5 +1,5 @@
 package com.__20088305assign1mobileapp__.animal
-import com.__20088305assign1mobileapp__.main.animalList
+
 
 class AnimalList : AnimalStore {
 

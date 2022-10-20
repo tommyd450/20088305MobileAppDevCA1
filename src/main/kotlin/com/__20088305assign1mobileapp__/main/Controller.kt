@@ -2,10 +2,10 @@ package com.__20088305assign1mobileapp__.main
 import com.__20088305assign1mobileapp__.animal.Animal
 import com.__20088305assign1mobileapp__.animal.AnimalDatabase
 
-val animalList = AnimalDatabase()
+
 class Controller {
-
-
+    var entryNo =0
+    val animalList = AnimalDatabase()
     fun addAnimal(species: String, appearence: String, location: String,img: String) : Boolean{
         print(animalList.animals.size.toLong())
         val newAnimal = Animal(animalList.animals.size.toLong(),species,appearence,location,img)
@@ -57,5 +57,20 @@ class Controller {
         return false
     }
 
-
+    fun nextEntry() : Animal?
+    {
+        if(entryNo+1 <= animalList.animals.size-1) {
+            entryNo++
+            return animalList.animals.get(entryNo)
+        }
+        return null
+    }
+    fun prevEntry() : Animal?
+    {
+        if (entryNo - 1 < 0) {
+            entryNo--
+            return animalList.animals.get(entryNo)
+        }
+        return animalList.animals.get(entryNo)
+    }
 }
