@@ -59,7 +59,7 @@ class Controller {
 
     fun nextEntry() : Animal?
     {
-        if(entryNo+1 <= animalList.animals.size-1) {
+        if(entryNo+1 < animalList.animals.size) {
             entryNo++
             return animalList.animals.get(entryNo)
         }
@@ -67,7 +67,7 @@ class Controller {
     }
     fun prevEntry() : Animal?
     {
-        if (entryNo - 1 < 0) {
+        if (entryNo - 1 > -1) {
             entryNo--
             return animalList.animals.get(entryNo)
         }

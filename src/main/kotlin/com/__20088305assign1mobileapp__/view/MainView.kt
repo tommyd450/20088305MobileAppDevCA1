@@ -18,7 +18,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import javax.swing.ImageIcon
 
-class MainView : View("Hello TornadoFX") {
+class MainView : View("Animal Spotting App") {
     var cont = Controller() //Instantiates Controller
     var speciesField: TextField by singleAssign() //Dont know what singleAssign does look up
     var appearenceField: TextField by singleAssign()
@@ -36,6 +36,7 @@ class MainView : View("Hello TornadoFX") {
     var viewAppearence : Label by singleAssign()
     var viewLocation : Label by singleAssign()
     var viewImageLink : ImageView by singleAssign()
+    var viewId : Label by singleAssign()
     lateinit var imageDisplay : ImageView
 
     override val root = hbox {
@@ -155,13 +156,6 @@ class MainView : View("Hello TornadoFX") {
             }
 
         }
-        hbox{
-            viewImageLink = imageview()
-            viewImageLink.maxHeight(300.00)
-            viewImageLink.maxWidth(300.00)
-            viewImageLink.prefHeight(300.0)
-            viewImageLink.isPreserveRatio
-        }
         vbox{
             style = "-fx-border-color: black;\n" +
                     "-fx-border-insets: 5;\n" +
@@ -170,12 +164,16 @@ class MainView : View("Hello TornadoFX") {
             prefWidth = 300.0
             try{
                 padding = Insets(50.0,10.0,20.0,20.0)
-
+                viewImageLink = imageview()
+                viewImageLink.maxHeight(300.00)
+                viewImageLink.maxWidth(300.00)
+                viewImageLink.prefHeight(300.0)
+                viewImageLink.isPreserveRatio
 
                 fieldset {
-                    translateY = 400.0
                     padding = Insets(20.0, 10.0, 20.0, 20.0)
-                    viewName = label("Name") {}
+                    viewId = label("Id: "){}
+                    viewName = label("Name:") {}
                     viewLocation = label("Location:") {}
                     viewAppearence = label("Appearence:") {}
 
@@ -185,9 +183,15 @@ class MainView : View("Hello TornadoFX") {
                                 var cycleAn = cont.nextEntry()
                                 print(cycleAn.toString())
                                 if (cycleAn != null) {
+                                    viewId.text = "Id : " + cycleAn.id.toString()
                                     viewName.text = "Name : " + cycleAn.species
                                     viewAppearence.text = "Location : " + cycleAn.appearance
                                     viewLocation.text = "Appearence : " + cycleAn.location
+                                    updateById.text = cycleAn.img
+                                    updateSpecies.text = cycleAn.species
+                                    updateAppearence.text = cycleAn.appearance
+                                    updateImg.text = cycleAn.img
+                                    updateLocation.text = cycleAn.location
                                     var url = URL(cycleAn.img)
                                     var urlCon = url.openConnection() as HttpURLConnection
                                     var response = urlCon.responseCode
@@ -198,12 +202,12 @@ class MainView : View("Hello TornadoFX") {
                                         var image = Image(cycleAn.img, 300.0, 300.0, true, true)
                                         viewImageLink.image = image
                                         println(viewImageLink.image.url)
-                                    }
+                                    }else{}
                                 }
                             } catch (e: NullPointerException) {
-                                e.printStackTrace()
+                                //e.printStackTrace()
                             } catch (e: MalformedURLException) {
-                                e.printStackTrace()
+                                //e.printStackTrace()
                             }
                         }
                     }
@@ -213,9 +217,15 @@ class MainView : View("Hello TornadoFX") {
                                 var cycleAn = cont.prevEntry()
                                 print(cycleAn.toString())
                                 if (cycleAn != null) {
-                                    viewName.text = "Name :" + cycleAn.species
+                                    viewId.text = "Id : " + cycleAn.id.toString()
+                                    viewName.text = "Name : " + cycleAn.species
                                     viewAppearence.text = "Location : " + cycleAn.appearance
                                     viewLocation.text = "Appearence : " + cycleAn.location
+                                    updateById.text = cycleAn.img
+                                    updateSpecies.text = cycleAn.species
+                                    updateAppearence.text = cycleAn.appearance
+                                    updateImg.text = cycleAn.img
+                                    updateLocation.text = cycleAn.location
                                     var url = URL(cycleAn.img)
                                     var urlCon = url.openConnection() as HttpURLConnection
                                     var response = urlCon.responseCode
@@ -226,16 +236,16 @@ class MainView : View("Hello TornadoFX") {
                                     }
                                 }
                             } catch (e: NullPointerException) {
-                                e.printStackTrace()
+                                //e.printStackTrace()
                             } catch (e: MalformedURLException) {
-                                e.printStackTrace()
+                                //e.printStackTrace()
                             }
                         }
                     }
                 }
             }catch(e:MalformedURLException)
             {
-
+                e.printStackTrace()
             }
 
 
