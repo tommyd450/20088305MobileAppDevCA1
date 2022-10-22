@@ -111,11 +111,10 @@ class MainView : View("Animal Spotting App") {
                 button("Delete") {
                     action{
                         try{
-                            //cont.dummyData()
                             cont.deleteAnimal(cont.search(deleteById.text.toLong()))
                             displayArea.text += cont.listAnimals()+"\n"
                         }catch (e: NumberFormatException){
-                            displayArea.text("\n Borked")
+
                         }
 
                     }
@@ -187,7 +186,7 @@ class MainView : View("Animal Spotting App") {
                                     viewName.text = "Name : " + cycleAn.species
                                     viewAppearence.text = "Location : " + cycleAn.appearance
                                     viewLocation.text = "Appearence : " + cycleAn.location
-                                    updateById.text = cycleAn.img
+                                    updateById.text = cycleAn.id.toString()
                                     updateSpecies.text = cycleAn.species
                                     updateAppearence.text = cycleAn.appearance
                                     updateImg.text = cycleAn.img
@@ -221,7 +220,7 @@ class MainView : View("Animal Spotting App") {
                                     viewName.text = "Name : " + cycleAn.species
                                     viewAppearence.text = "Location : " + cycleAn.appearance
                                     viewLocation.text = "Appearence : " + cycleAn.location
-                                    updateById.text = cycleAn.img
+                                    updateById.text = cycleAn.id.toString()
                                     updateSpecies.text = cycleAn.species
                                     updateAppearence.text = cycleAn.appearance
                                     updateImg.text = cycleAn.img
