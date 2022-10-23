@@ -8,15 +8,12 @@ import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import javafx.scene.layout.HBox
 
 import tornadofx.*
 import java.lang.NullPointerException
 import java.net.HttpURLConnection
-import java.net.InetAddress
 import java.net.MalformedURLException
 import java.net.URL
-import javax.swing.ImageIcon
 
 class MainView : View("Animal Spotting App") {
     var cont = Controller() //Instantiates Controller
@@ -164,10 +161,15 @@ class MainView : View("Animal Spotting App") {
             try{
                 padding = Insets(50.0,10.0,20.0,20.0)
                 viewImageLink = imageview()
-                viewImageLink.maxHeight(300.00)
-                viewImageLink.maxWidth(300.00)
-                viewImageLink.prefHeight(300.0)
-                viewImageLink.isPreserveRatio
+                viewImageLink.maxHeight(100.00)
+                viewImageLink.maxWidth(100.00)
+                viewImageLink.prefHeight(100.0)
+                viewImageLink.prefWidth(100.0)
+                viewImageLink.fitHeight=300.0
+                viewImageLink.fitWidth=300.0
+                viewImageLink.preserveRatioProperty()
+
+                //viewImageLink.isPreserveRatio
 
                 fieldset {
                     padding = Insets(20.0, 10.0, 20.0, 20.0)
@@ -194,19 +196,16 @@ class MainView : View("Animal Spotting App") {
                                     var url = URL(cycleAn.img)
                                     var urlCon = url.openConnection() as HttpURLConnection
                                     var response = urlCon.responseCode
-                                    while (response != 200) {
-
-                                    }
                                     if (response != 404) {
                                         var image = Image(cycleAn.img, 300.0, 300.0, true, true)
                                         viewImageLink.image = image
                                         println(viewImageLink.image.url)
-                                    }else{}
+                                    }
                                 }
                             } catch (e: NullPointerException) {
                                 //e.printStackTrace()
                             } catch (e: MalformedURLException) {
-                                //e.printStackTrace()
+                                viewImageLink.image = Image(System.getProperty("user.dir")+"\\NoImgFound.png")
                             }
                         }
                     }
@@ -231,13 +230,13 @@ class MainView : View("Animal Spotting App") {
                                     if (response != 404) {
                                         var image = Image(cycleAn.img, 300.0, 300.0, true, true)
                                         viewImageLink.image = image
-                                        println(viewImageLink.image.url)
+                                        //println(viewImageLink.image.url)
                                     }
                                 }
                             } catch (e: NullPointerException) {
                                 //e.printStackTrace()
                             } catch (e: MalformedURLException) {
-                                //e.printStackTrace()
+                                viewImageLink.image = Image(System.getProperty("user.dir")+"\\NoImgFound.png")
                             }
                         }
                     }
